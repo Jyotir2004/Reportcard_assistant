@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Report Card - {{ report_card.student.name }}</title>
+</head>
+<body>
+    <main>
+        <h1>Student Report Card</h1>
+        <h2>{{ report_card.student.name }}</h2>
+        <p>Roll number: {{ report_card.student.roll_number }}</p>
+        {% if report_card.student.class_name %}
+            <p>Class: {{ report_card.student.class_name }}{% if report_card.student.section %}-{{ report_card.student.section }}{% endif %}</p>
+            <p>Academic year: {{ report_card.student.academic_year }}</p>
+        {% endif %}
+        {% if report_card.examination %}
+            <p>Examination: {{ report_card.examination.name }}</p>
+        {% endif %}
+        {% if report_card.student.department %}
+            <p>Department: {{ report_card.student.department.name }}</p>
+        {% endif %}
+
+        <p>Total Marks: {{ report_card.total_marks }}{% if report_card.total_maximum_marks %} / {{ report_card.total_maximum_marks }}{% endif %}</p>
+        {% if report_card.percentage %}
+            <p>Overall Percentage: {{ report_card.percentage }}%</p>
+        {% endif %}
+        {% if report_card.overall_grade %}
+            <p>Overall Grade: {{ report_card.overall_grade }}</p>
+            <p>Status: {% if report_card.passed %}PASS{% else %}FAIL{% endif %}</p>
+        {% endif %}
+        {% if report_card.rank %}
+            <p>Rank: {{ report_card.rank }}</p>
+        {% elif report_card.rank_unavailable_reason %}
+            <p>{{ report_card.rank_unavailable_reason }}</p>
+        {% endif %}
+        {% if report_card.percentile %}
+            <p>Class Percentile: {{ report_card.percentile }}%</p>
+        {% endif %}
+        <p>Generated: {{ report_card.generated_at|date:"F j, Y, g:i a" }}</p>
+        {% if report_card.teacher_summary %}
+            <h3>Academic Feedback</h3>
+            <p>{{ report_card.teacher_summary }}</p>
+        {% endif %}
+        {% if report_card.teacher_remarks %}
+            <h3>Teacher Remarks</h3>
+            <p>{{ report_card.teacher_remarks }}</p>
+        {% endif %}
+
+        <h3>Subject Marks</h3>
+        {% if subject_marks %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Marks</th>
+                        <th>Maximum Marks</th>
+                        {% if report_card.subject_results %}
+                            <th>Percentage</th>
+                            <th>Grade</th>
+                            <th>Result</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mark in subject_marks %}
+                        <tr>
+                            <td>{{ mark.subject.name }}</td>
+                            <td>{{ mark.marks }}</td>
+                            <td>{% if mark.maximum_marks %}{{ mark.maximum_marks }}{% else %}{{ mark.subject.maximum_marks }}{% endif %}</td>
+                            {% if report_card.subject_results %}
+                                <td>{% for result in report_card.subject_results %}{% if result.subject == mark.subject.name %}{{ result.percentage }}%{% endif %}{% endfor %}</td>
+                                <td>{% for result in report_card.subject_results %}{% if result.subject == mark.subject.name %}{{ result.grade }}{% endif %}{% endfor %}</td>
+                                <td>{% for result in report_card.subject_results %}{% if result.subject == mark.subject.name %}{% if result.passed %}Pass{% else %}Fail{% endif %}{% endif %}{% endfor %}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No subject marks recorded.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

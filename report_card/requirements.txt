@@ -1,0 +1,4 @@
+Django>=6.1,<6.2
+djangorestframework>=3.16,<4.0
+python-dotenv>=1.0,<2.0
+reportlab>=4.2,<5.0
