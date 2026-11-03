@@ -2,11 +2,11 @@
 
 An intelligent Student Report Card Management and Assistant System built with a Django REST Framework backend and a modern React (Vite) frontend.
 
----
+----
 
 ## Features
 
-- **Interactive AI Assistant**: Guided workflow to analyze student records, compare examinations, and generate performance insights.
+- **Interactive AI Assistant**: Guided workflow to analyse student records, compare examinations, and generate performance insights.
 - **Report Card Generation**: Automated calculation of totals, percentages, ranks, and letter grades.
 - **PDF Export**: Download cleanly formatted PDF report cards generated using ReportLab.
 - **Examination Management**: Multi-term/exam performance tracking and cross-examination comparisons.
